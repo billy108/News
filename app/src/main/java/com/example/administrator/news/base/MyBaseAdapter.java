@@ -1,27 +1,40 @@
 package com.example.administrator.news.base;
 
-import android.view.View;
-import android.view.ViewGroup;
+import android.content.Context;
 import android.widget.BaseAdapter;
 
-public class MyBaseAdapter extends BaseAdapter{
+import java.util.List;
+
+public abstract class MyBaseAdapter<T, Q> extends BaseAdapter{
+    private List<T> list;
+    private Context context;
+    private Q view;
+
+    public MyBaseAdapter(List<T> list, Context context) {
+        this.list = list;
+        this.context = context;
+    }
+
+    public MyBaseAdapter(List<T> list, Context context, Q view) {
+
+        this.list = list;
+        this.context = context;
+        this.view = view;
+    }
+
     @Override
     public int getCount() {
-        return 0;
+        return list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return list.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
-    }
 }

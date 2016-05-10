@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.administrator.news.R;
 import com.example.administrator.news.base.BaseFragment;
+import com.example.administrator.news.base.MyBaseAdapter;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -50,7 +51,7 @@ public class MenuFragment2 extends BaseFragment{
         menuList.clear();
         menuList = menuNewCenterList;
         if (adapter == null) {
-            adapter = new MenuAdapter(ct, menuList);
+            adapter = new MenuAdapter(menuList, ct);
             lv_menu_news_center.setAdapter(adapter);
         } else {
             adapter.notifyDataSetChanged();
@@ -58,34 +59,16 @@ public class MenuFragment2 extends BaseFragment{
         adapter.setCurPostion(0);
     }
 
-    class MenuAdapter extends BaseAdapter{
-        private Context ct;
-        private List<String> menuList = new ArrayList<String>();
+    class MenuAdapter extends MyBaseAdapter{
         private int curPostion = 0;
 
-        public MenuAdapter(Context ct, List<String> menuList) {
-            this.ct = ct;
-            this.menuList = menuList;
+        public MenuAdapter(List list, Context context) {
+            super(list, context);
         }
 
         public void setCurPostion(int postion){
             this.curPostion = postion;
             notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return menuList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return menuList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
         }
 
         @Override
