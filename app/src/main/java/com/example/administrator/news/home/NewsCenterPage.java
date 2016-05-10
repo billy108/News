@@ -1,6 +1,7 @@
 package com.example.administrator.news.home;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.example.administrator.news.base.BasePage;
 import com.example.administrator.news.bean.NewsCenterCategory;
 import com.example.administrator.news.fragment.MenuFragment2;
 import com.example.administrator.news.utils.GsonUtils;
+import com.example.administrator.news.utils.SharedPreferencesUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewsCenterPage extends BasePage {
+	private static final String NEWSCENTERPAGE = "NewsCenterPage";
 
 	public NewsCenterPage(Context ct) {
 		super(ct);
@@ -35,6 +38,10 @@ public class NewsCenterPage extends BasePage {
 
 	@Override
 	public void initData() {
+		String vaule = SharedPreferencesUtils.getString(ct, NEWSCENTERPAGE);
+		if (TextUtils.isEmpty(vaule)) {
+			ProcessData(vaule);
+		}
 		TestPost();
 	}
 
@@ -48,7 +55,7 @@ public class NewsCenterPage extends BasePage {
 					public void onSuccess(ResponseInfo<String> responseInfo) {
 //						textView.setText(responseInfo.result);
 						LogUtils.d(responseInfo.result);
-
+						SharedPreferencesUtils.saveString(ct, NEWSCENTERPAGE, responseInfo.result);
 						ProcessData(responseInfo.result);
 					}
 
@@ -61,8 +68,8 @@ public class NewsCenterPage extends BasePage {
 
 	private List<String> menuNewCenterList = new ArrayList<>();
 	private void ProcessData(String result) {
-//		NewsCenterCategory category = GsonUtils.jsonToBean(result, NewsCenterCategory.class);
-		if (menuNewCenterList.size() == 0) {
+		NewsCenterCategory category = GsonUtils.jsonToBean(result, NewsCenterCategory.class);
+		if (menuNewCenterList.size() == 0 && result != null) {
 			menuNewCenterList.add("新闻");
 			menuNewCenterList.add("专题");
 			menuNewCenterList.add("组图");
