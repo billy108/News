@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.administrator.news.MainActivity;
+import com.example.administrator.news.base.BaseFragment;
 import com.example.administrator.news.base.BasePage;
 import com.example.administrator.news.bean.NewsCenterCategory;
 import com.example.administrator.news.fragment.MenuFragment2;
@@ -70,6 +71,7 @@ public class NewsCenterPage extends BasePage {
 	private void ProcessData(String result) {
 		NewsCenterCategory category = GsonUtils.jsonToBean(result, NewsCenterCategory.class);
 		if (menuNewCenterList.size() == 0 && result != null) {
+			BaseFragment.flag = true;
 			menuNewCenterList.add("新闻");
 			menuNewCenterList.add("专题");
 			menuNewCenterList.add("组图");

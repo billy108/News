@@ -59,7 +59,9 @@ public class HomeFragment extends BaseFragment {
 //                    sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
 //                }
                 BasePage page = list.get(position);
-                page.initData();
+                if (!flag) {
+                    page.initData();
+                }
             }
 
             @Override

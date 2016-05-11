@@ -17,6 +17,7 @@ public abstract class BaseFragment extends Fragment {
     public View view;
     public Context ct;
     public SlidingMenu sm;
+    public static boolean flag = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
